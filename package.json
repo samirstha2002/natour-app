@@ -1,0 +1,20 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "learning node express and mangodb",
+  "homepage": "https://github.com/samirstha2002/natour#readme",
+  "bugs": {
+    "url": "https://github.com/samirstha2002/natour/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samirstha2002/natour.git"
+  },
+  "license": "ISC",
+  "author": "samir shrestha",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
