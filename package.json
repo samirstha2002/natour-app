@@ -1,14 +1,14 @@
 {
   "name": "natours",
   "version": "1.0.0",
-  "description": "learning node express and mangodb",
-  "homepage": "https://github.com/samirstha2002/natour#readme",
+  "description": "learning'",
+  "homepage": "https://github.com/samirstha2002/natour-app#readme",
   "bugs": {
-    "url": "https://github.com/samirstha2002/natour/issues"
+    "url": "https://github.com/samirstha2002/natour-app/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samirstha2002/natour.git"
+    "url": "git+https://github.com/samirstha2002/natour-app.git"
   },
   "license": "ISC",
   "author": "samir shrestha",
