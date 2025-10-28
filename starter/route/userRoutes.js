@@ -1,9 +1,11 @@
 const express = require('express');
+
 const userController = require('./../controller/usercontoller');
 
 const router = express.Router();
 
 router
+
   .route('/')
   .get(userController.getallusers)
   .post(userController.createuser);
