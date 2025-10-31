@@ -6,6 +6,9 @@ const router = express.Router();
 router
   .route('/top5tour')
   .get(tourController.aliastop, tourController.getalltours);
+
+router.route('/tour-stats').get(tourController.getTourStats);
+router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 router
   .route('/')
   .get(tourController.getalltours)
