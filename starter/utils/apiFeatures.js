@@ -25,13 +25,25 @@ class ApiFeatures {
   }
   sort() {
     if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(',').join(' ');
+      let sortBy = this.queryString.sort;
+
+      // if it's an array (from repeated params), join with space
+      if (Array.isArray(sortBy)) {
+        sortBy = sortBy.join(' ');
+      }
+      // if it's a string with commas, convert to space-separated
+      else if (typeof sortBy === 'string') {
+        sortBy = sortBy.split(',').join(' ');
+      }
+
       this.query = this.query.sort(sortBy);
     } else {
-      this.query = this.query.sort('_id');
+      this.query = this.query.sort('_id'); // default
     }
+
     return this;
   }
+
   limitFields() {
     //field limiting
     if (this.queryString.fields) {

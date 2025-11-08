@@ -8,7 +8,15 @@ const sendEmail = require('../utils/email');
 
 const createsendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
+  const cookieOption = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIES_EXPIRES_IN * 24 * 60 * 60 * 1000,
+    ),
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV === 'production') cookieOption.secure = true;
 
+  res.cookie('jwt', token, cookieOption);
   res.status(statusCode).json({
     status: 'sucess',
     token,
