@@ -22,7 +22,7 @@ mongoose
     console.error('DB connection error:', err);
   });
 
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`));
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`));
 // importing data
 const importData = async () => {
   try {
