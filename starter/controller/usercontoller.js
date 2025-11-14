@@ -9,18 +9,24 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
-exports.getallusers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-  // send responses
-  res.status(200).json({
-    status: 'sucess',
-    results: users.length,
 
-    data: {
-      users,
-    },
-  });
-});
+exports.getme = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+exports.getallusers = factory.getAll(User);
+// catchAsync(async (req, res, next) => {
+//   const users = await User.find();
+//   // send responses
+//   res.status(200).json({
+//     status: 'sucess',
+//     results: users.length,
+
+//     data: {
+//       users,
+//     },
+//   });
+// });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   //1) create error if user posts password data
@@ -60,17 +66,12 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
-exports.getuser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'this is route is currently not defined',
-  });
-};
+exports.getuser = factory.getOne(User);
 
 exports.createuser = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: 'this is route is currently not defined',
+    message: 'this is route is not defined.please use /signup',
   });
 };
 exports.updateuser = factory.updateOne(User);
