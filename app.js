@@ -11,6 +11,7 @@ const globalerrorHandler = require('./starter/controller/errorcontroller');
 const AppError = require('./starter/utils/appError');
 const tourRouter = require('./starter/route/tourRoutes');
 const userRouter = require('./starter/route/userRoutes');
+const reviewrouter = require('./starter/route/reviewroute');
 
 const app = express();
 // 1)  Global MiddleWare
@@ -25,7 +26,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const limiter = rateLimit({
   max: 100,
-  windowM: 60 * 60 * 1000,
+  windowMs: 60 * 60 * 1000,
   message: 'Too many requests from the Ip, please try again in an hour',
 });
 
@@ -62,6 +63,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/tours/', tourRouter);
 app.use('/api/v1/users/', userRouter);
+app.use('/api/v1/reviews/', reviewrouter);
 
 // ✅ Catch-all 404 handler for Express 5
 app.use((req, res, next) => {
