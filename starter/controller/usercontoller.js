@@ -1,7 +1,7 @@
 const AppError = require('../utils/appError');
 const User = require('./../models/usermodel');
 const catchAsync = require('./../utils/catchAsync');
-
+const factory = require('./../controller/handlerfactoryfunction');
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
@@ -79,9 +79,4 @@ exports.updateuser = (req, res) => {
     message: 'this is route is currently not defined',
   });
 };
-exports.deleteuser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'this is route is currently not defined',
-  });
-};
+exports.deleteuser = factory.deleteOne(User);
