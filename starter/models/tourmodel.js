@@ -91,7 +91,7 @@ const tourschema = new mongoose.Schema(
       address: String,
       description: String,
     },
-    location: [
+    locations: [
       {
         type: {
           type: String,
@@ -118,6 +118,12 @@ const tourschema = new mongoose.Schema(
 );
 tourschema.virtual('durationweeks').get(function () {
   return this.duration / 7;
+});
+// virtual populate
+tourschema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
 });
 
 tourschema.pre('save', function (next) {
