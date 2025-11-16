@@ -120,6 +120,7 @@ const tourschema = new mongoose.Schema(
 
 tourschema.index({ price: 1, ratingsAverage: -1 });
 tourschema.index({ slug: 1 });
+tourschema.index({ startLocation: '2dsphere' });
 
 tourschema.virtual('durationweeks').get(function () {
   return this.duration / 7;
@@ -162,11 +163,11 @@ tourschema.post(/^find/, function (docs, next) {
   next();
 });
 
-tourschema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
-  console.log(this.pipeline());
-  next();
-});
+// tourschema.pre('aggregate', function (next) {
+//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+//   console.log(this.pipeline());
+//   next();
+// });
 // tourschema.pre('save', function (next) {
 //   console.log('will save');
 //   next();
