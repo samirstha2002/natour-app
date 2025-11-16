@@ -4,6 +4,7 @@ const Review = require('./../models/reviewmodel');
 const factory = require('./../controller/handlerfactoryfunction');
 
 exports.getallreviews = factory.getAll(Review);
+
 //catchAsync(async (req, res, next) => {
 //   let filter = {};
 //   if (req.params.tourId)
