@@ -100,6 +100,32 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
+//only for rendered pages ,no error
+exports.isloggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      // Verify token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET,
+      );
+
+      // Check if user still exists
+      const freshUser = await User.findById(decoded.id);
+      if (!freshUser) return next();
+
+      // Check if user changed password after token was issued
+      if (freshUser.changedPasswordAfter(decoded.iat)) return next();
+
+      // There is a logged-in user
+      res.locals.user = freshUser;
+    } catch (err) {
+      return next(); // Invalid token, just continue
+    }
+  }
+  next(); // Always call next() once
+});
+
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
