@@ -2,7 +2,7 @@ const path = require('path');
 // const pug = require('pug');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 
 const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
@@ -21,8 +21,22 @@ app.set('views', path.join(__dirname, 'starter', 'views'));
 // 1)  Global MiddleWare
 //serving staticfiles
 app.use(express.static(path.join(__dirname, 'starter', 'public')));
+
 //set the security http  headers
-app.use(helmet());
+
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       scriptSrc: ["'self'", 'https://unpkg.com', "'unsafe-inline'"], // allow MapLibre scripts
+//       styleSrc: ["'self'", 'https://unpkg.com', "'unsafe-inline'"], // allow MapLibre CSS
+//       imgSrc: ["'self'", 'data:'],
+//       connectSrc: ["'self'"],
+//       workerSrc: ["'self'", 'blob:'],
+//     },
+//   }),
+// );
+
 console.log(process.env.NODE_ENV);
 // development logging
 if (process.env.NODE_ENV === 'development') {
