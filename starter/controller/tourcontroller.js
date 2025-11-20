@@ -1,4 +1,6 @@
 // const fs = require('fs');
+const multer = require('multer');
+const sharp = require('sharp');
 const AppError = require('../utils/appError');
 const Tour = require('./../models/tourmodel');
 // const ApiFeatures = require('./../utils/apiFeatures');
@@ -28,7 +30,35 @@ const factory = require('./../controller/handlerfactoryfunction');
 //   }
 //   next();
 // };
+const multerStorage = multer.memoryStorage();
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image .please uplaod an image '));
+  }
+};
 
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadTourimages = upload.fields([
+  {
+    name: 'imageCover',
+    maxCount: 1,
+  },
+  {
+    name: 'images',
+    maxCount: 3,
+  },
+]);
+
+exports.resizeTourimages = (req, res, next) => {
+  console.log(req.files);
+  next();
+};
 // 2) Route Handler
 
 exports.aliastop = (req, res, next) => {
