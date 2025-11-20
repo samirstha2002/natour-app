@@ -24,29 +24,55 @@ const handleJWTError = () => {
 const handleTokenExpireError = () => {
   return new AppError('Token has been expired', 401);
 };
-const sendErrorDev = (err, res) => {
-  res.status(err.statusCode).json({
-    status: err.status,
-    error: err,
-
-    message: err.message,
-    stack: err.stack,
-  });
-};
-const sendErrorProd = (err, res) => {
-  //operational trusted error:send message to client
-  if (err.isOperational) {
-    res.status(err.statusCode).json({
+const sendErrorDev = (err, req, res) => {
+  if (req.originalUrl.startsWith('/api')) {
+    return res.status(err.statusCode).json({
       status: err.status,
+      error: err,
+
       message: err.message,
+      stack: err.stack,
     });
   } else {
-    //programming or other unknown error:don't leak the err details
     console.error('Error', err);
-    res.status(500).json({
-      status: 'error',
-      message: 'Something Went  Very Wrong',
+    return res.status(err.statusCode).render('error', {
+      title: 'Something went wrong',
+      msg: err.message,
     });
+  }
+};
+const sendErrorProd = (err, req, res) => {
+  // A) Api
+  if (req.originalUrl.startsWith('/api')) {
+    //operational trusted error:send message to client
+    if (err.isOperational) {
+      return res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+      });
+    } else {
+      //programming or other unknown error:don't leak the err details
+      console.error('Error', err);
+      return res.status(500).json({
+        status: 'error',
+        message: 'Something Went  Very Wrong',
+      });
+    }
+  } else {
+    // B) RENDERING WEBSITE
+    if (err.isOperational) {
+      return res.status(err.statusCode).render('error', {
+        title: 'Something went wrong',
+        msg: err.message,
+      });
+    } else {
+      //programming or other unknown error:don't leak the err details
+      console.error('Error', err);
+      return res.status(err.statusCode).render('error', {
+        title: 'Something went wrong',
+        msg: 'Please Try Again',
+      });
+    }
   }
 };
 
@@ -54,7 +80,7 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
   if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, res);
+    sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
     error.message = err.message;
@@ -66,6 +92,6 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleTokenExpireError();
 
-    sendErrorProd(error, res);
+    sendErrorProd(error, req, res);
   }
 };

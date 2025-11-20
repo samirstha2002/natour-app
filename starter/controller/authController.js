@@ -63,6 +63,13 @@ exports.login = catchAsync(async (req, res, next) => {
   createsendToken(user, 200, res);
 });
 
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'logged out', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success' });
+};
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
   //1) getting token and checck if it exist
@@ -96,6 +103,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   // grant acess to protected user
   req.user = freshuser;
+  res.locals.user = freshuser;
 
   next();
 });

@@ -1,9 +1,12 @@
 const express = require('express');
 const authController = require('./../controller/authController');
 const userController = require('./../controller/usercontoller');
+
 const router = express.Router();
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
+router.get('/logout', authController.logout);
+
 router.post('/forgetPassword', authController.forgetPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 // all routes pri=otected after this middle ware
