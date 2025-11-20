@@ -13115,12 +13115,12 @@ if (loginForm) {
 if (logOutbtn) logOutbtn.addEventListener('click', _login.logout);
 if (userDataSettingsForm) userDataSettingsForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  var name = document.getElementById('name').value;
-  var email = document.getElementById('email').value;
-  (0, _updateSetting.updateSettings)({
-    name: name,
-    email: email
-  }, 'data');
+  var form = new FormData();
+  form.append('name', document.getElementById('name').value);
+  form.append('email', document.getElementById('email').value);
+  form.append('photo', document.getElementById('photo').files[0]);
+  console.log(form);
+  (0, _updateSetting.updateSettings)(form, 'data');
 });
 if (userPasswordSettingsForm) userPasswordSettingsForm.addEventListener('submit', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
