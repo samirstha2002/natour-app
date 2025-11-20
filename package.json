@@ -18,8 +18,8 @@
     "start": "nodemon server.js",
     "start:prod": "cross-env NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
-    "watch:js": "parcel watch ./starter/public/js/index.js --out-dir ./starter/public/js --out-file bundle.js",
-    "build:js": "parcel watch ./starter/public/js/index.js --out-dir ./starter/public/js --out-file bundle.js"
+    "watch:js": "parcel watch ./starter/public/js/index.js --out-dir ./starter/public/js --out-file bundle.js --no-source-maps",
+    "build:js": "parcel watch ./starter/public/js/index.js --out-dir ./starter/public/js --out-file bundle.js --no-source-maps"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
