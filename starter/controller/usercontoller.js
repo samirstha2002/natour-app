@@ -55,8 +55,7 @@ exports.getallusers = factory.getAll(User);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   //1) create error if user posts password data
-  console.log(req.file);
-  console.log(req.body);
+
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
@@ -69,7 +68,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   // filtered out unwanted field that doesnot need to be updated
 
   const filteredBody = filterObj(req.body, 'name', 'email');
-
+  if (req.file) filteredBody.photo = req.file.filename;
   // updated user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
