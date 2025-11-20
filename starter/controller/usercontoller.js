@@ -30,7 +30,8 @@ exports.getallusers = factory.getAll(User);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   //1) create error if user posts password data
-
+  console.log(req.file);
+  console.log(req.body);
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
