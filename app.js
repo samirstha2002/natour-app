@@ -16,6 +16,7 @@ const tourRouter = require('./starter/route/tourRoutes');
 const userRouter = require('./starter/route/userRoutes');
 const reviewrouter = require('./starter/route/reviewroute');
 const viewRouter = require('./starter/route/viewRoutes');
+const bookingrouter = require('./starter/route/bookingroutes');
 const app = express();
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'starter', 'views'));
@@ -85,6 +86,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours/', tourRouter);
 app.use('/api/v1/users/', userRouter);
 app.use('/api/v1/reviews/', reviewrouter);
+app.use('/api/v1/bookings/', bookingrouter);
 
 // ✅ Catch-all 404 handler for Express 5
 app.use((req, res, next) => {
