@@ -1,5 +1,6 @@
 // const AppError = require('../utils/appError');
 const Review = require('./../models/reviewmodel');
+const Booking = require('./../models/bookingmodel');
 // const catchAsync = require('./../utils/catchAsync');
 const factory = require('./../controller/handlerfactoryfunction');
 
@@ -55,5 +56,6 @@ exports.settouruserIds = (req, res, next) => {
 
 exports.getreview = factory.getOne(Review);
 exports.createreview = factory.createOne(Review);
+
 exports.updatereviews = factory.updateOne(Review);
 exports.deletereviews = factory.deleteOne(Review);

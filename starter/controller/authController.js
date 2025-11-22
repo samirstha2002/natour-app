@@ -13,6 +13,7 @@ const createsendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIES_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true,
+    sameSite: 'lax',
   };
   if (process.env.NODE_ENV === 'production') cookieOption.secure = true;
 
