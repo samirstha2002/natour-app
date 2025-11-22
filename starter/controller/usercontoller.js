@@ -40,6 +40,7 @@ exports.resizePhoto = catchAsync(async (req, res, next) => {
     .toFile(`starter/public/img/users/${req.file.filename}`);
   next();
 });
+
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
