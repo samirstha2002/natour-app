@@ -1,4 +1,5 @@
 const path = require('path');
+const compression = require('compression');
 // const pug = require('pug');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
@@ -66,7 +67,7 @@ app.use((req, res, next) => {
 });
 
 app.use(hpp());
-
+app.use(compression());
 // test middlewares
 app.use((req, res, next) => {
   console.log('hello from middleware');
